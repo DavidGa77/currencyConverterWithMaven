@@ -23,6 +23,7 @@ public class CurrencyConverter {
 		Scanner sc = new Scanner(System.in);
 		System.out.println("Please enter amount and currency e.g. \"100 pound\"");
 		String[] convParams = sc.nextLine().split(" ");
+		sc.close();
 		if(convParams.length != 2) {
 			System.out.print("Invalid conversion parameters!");
 		} else {

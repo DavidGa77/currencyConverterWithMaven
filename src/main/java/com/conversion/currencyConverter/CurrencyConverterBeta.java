@@ -19,13 +19,15 @@ public class CurrencyConverterBeta {
         Scanner sc = new Scanner(System.in);
         System.out.println("Please enter amount and currency e.g. \"100 pound\"");
         String[] convParams = sc.nextLine().split(" ");
-        if(convParams.length != 2) {
+        sc.close();
+        if (convParams.length != 2) {
             System.out.print("Invalid conversion parameters!");
         } else {
             CurrencyConverterBeta ccBeta = new CurrencyConverterBeta();
             ccBeta.run(convParams[0], convParams[1]);
         }
     }
+
     public void run(String amount, String currency) {
         long start = System.currentTimeMillis();
 
@@ -36,28 +38,28 @@ public class CurrencyConverterBeta {
         double result = 0;
         try {
             result = Double.parseDouble(amount);
-        }catch(NumberFormatException nfe) {
+        } catch (NumberFormatException nfe) {
             System.out.print("\"" + amount + "\"" + " is not a valid number!");
             System.exit(0);
         }
         Map<String, Double> rates = fillRatesMap();
 
-        if(currency.equalsIgnoreCase(Currency.Krona.getName())) {
+        if (currency.equalsIgnoreCase(Currency.Krona.getName())) {
             krona = result;
             dollar = round((result * rates.get("ISKUSD")), 2);
             euro = round((result * rates.get("ISKEUR")), 2);
             pound = round((result * (rates.get("ISKUSD") * rates.get("USDGBP"))), 2);
-        } else if(currency.equalsIgnoreCase(Currency.Dollar.getName())) {
+        } else if (currency.equalsIgnoreCase(Currency.Dollar.getName())) {
             dollar = result;
             euro = round((result * rates.get("USDEUR")), 2);
             pound = round((result * rates.get("USDGBP")), 2);
             krona = round((result * rates.get("USDISK")), 2);
-        } else if(currency.equalsIgnoreCase(Currency.Euro.getName())) {
+        } else if (currency.equalsIgnoreCase(Currency.Euro.getName())) {
             euro = result;
             dollar = round((result * rates.get("EURUSD")), 2);
             pound = round((result * rates.get("EURGBP")), 2);
             krona = round((result * rates.get("EURISK")), 2);
-        } else if(currency.equalsIgnoreCase(Currency.Pound.getName())) {
+        } else if (currency.equalsIgnoreCase(Currency.Pound.getName())) {
             pound = result;
             dollar = round((result * rates.get("GBPUSD")), 2);
             euro = round((result * rates.get("GBPEUR")), 2);
@@ -105,7 +107,7 @@ public class CurrencyConverterBeta {
         String response = "";
         try {
             response = callApi(url);
-        }catch (Exception ex) {
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
